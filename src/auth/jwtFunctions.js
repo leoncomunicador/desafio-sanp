@@ -14,8 +14,13 @@ const create = (user) => {
 };
 
 const verify = (token) => {
-  const payload = jwt.verify(token, secret);
-  return payload;
-};
+  try {
+    const payload = jwt.verify(token, secret)
+    return payload;
+  }
+  catch {
+    return null;
+  }
+}
 
 module.exports = { create, verify };
