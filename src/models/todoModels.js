@@ -7,9 +7,11 @@ const getAllTasks = async () => {
   return tasks;
 }
 
-const getByTask = async (task) => {
+const getTaskById = async (id) => {
+  if (!ObjectId.isValid(id)) return null;
+  
   const db = await connection();
-  return db.collection('todo-list-sanp').findOne({ task });
+  return db.collection('todo-list-sanp').findOne(ObjectId(id));;
 }
 
 
@@ -27,16 +29,20 @@ const updateTask = async (id, task) => {
       .collection('todo-list-sanp')
       .updateOne({ _id: ObjectId(id) }, { $set: { task } }));
 
+  const updateTask = await getTaskById(id);
+  return updateTask;
 }
 
 const excludeTask = async (id) => {
+  if (!ObjectId.isValid(id)) return null;
+  
   const db = await connection();
   await db.collection('todo-list-sanp').deleteOne({ _id: ObjectId(id) });
 };
 
 module.exports = {
   getAllTasks,
-  getByTask,
+  getTaskById,
   createTask,
   updateTask,
   excludeTask,

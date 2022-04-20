@@ -1,9 +1,9 @@
 const connection = require('./connection');
 
-const createUser = async (name, email, password) => { // função para criar um novo usuário
+const createUser = async (email, password) => { // função para criar um novo usuário
   const { insertedId } = await connection().then((db) => db
-    .collection('users').insertOne({ name, email, password, role: 'user' }));
-  return { name, email, role: 'user', _id: insertedId };
+    .collection('users').insertOne({ email, password }));
+  return { email, _id: insertedId };
 };
 
 const findByEmail = async (email) => { // função que verifica se existe o e-mail do usuário

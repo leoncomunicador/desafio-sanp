@@ -12,7 +12,10 @@
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.20.0",
+    "dotenv": "^16.0.0",
     "express": "^4.17.3",
+    "express-rescue": "^1.1.31",
+    "jsonwebtoken": "^8.5.1",
     "jwtoken": "^0.0.0",
     "mongodb": "^4.5.0"
   },
