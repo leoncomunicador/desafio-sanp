@@ -1,5 +1,6 @@
 const usersServices = require('../services/userServices.js');
 const { verify } = require('../auth/jwtFunctions.js');
+const { getTaskById } = require('../models/todoModels.js');
 
 const hasEmailAndPassword = (req, res, next) => {
   const { email, password } = req.body;
@@ -42,9 +43,19 @@ const isTokenValid = async (req, res, next) => {
 
   if (!authorization || !verify(authorization)) {
     return res.status(409).json({
-      message: 'Token inválido!'
+      message: 'Token inválido ou expirou!'
     });
   }
+  next();
+}
+
+
+const findTask = async (req, res, next) => {
+  const { id } = req.params;
+  const getTask = await getTaskById(id);
+  if (!getTask) {
+    return res.status(409).json({ message: 'Tarefa não encontrada!' })
+  };
   next();
 }
 
@@ -57,4 +68,5 @@ const verifyUserIsValid = [
 module.exports = {
   verifyUserIsValid,
   isTokenValid,
+  findTask,
 };

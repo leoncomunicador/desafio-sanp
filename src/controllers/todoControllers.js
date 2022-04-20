@@ -1,6 +1,6 @@
 const toDoServices = require('../services/todoServices.js');
 
-const getAllTasks = async (req, res) => {
+const getAllTasks = async (_req, res) => {
   const tasks = await toDoServices.getAllTasks();
   res.status(200).json({ tasks });
 };
@@ -14,7 +14,6 @@ const getTaskById = async (req, res) => {
 };
 
 const createTask = async (req, res) => {
-  const { authorization } = req.headers;
   const { task } = req.body;
 
   const newTask = await toDoServices.createTask(task);
@@ -26,16 +25,15 @@ const updateTask = async (req, res) => {
   const { id } = req.params;
   const { task } = req.body;
 
-  const taskUpdated = await toDoServices.updateTask(id, task);
-  res.status(201).json(taskUpdated);
+  await toDoServices.updateTask(id, task);
+  res.status(201).json({ message: 'Tarefa atualizada com sucesso' });
 };
 
 const excludeTask = async (req, res) => {
-  const { authorization } = req.headers;
   const { id } = req.params;
-  const task = await toDoServices.excludeTask(id);
+  await toDoServices.excludeTask(id);
 
-  res.status(200).json(task);
+  res.status(200).json({ message: 'Tarefa removida com sucesso' });
 };
 
 module.exports = {

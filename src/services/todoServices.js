@@ -1,5 +1,4 @@
 const toDoModels = require('../models/todoModels.js');
-const verifyToken = require('../auth/jwtFunctions.js');
 
 const getAllTasks = async () => {
   const tasks = await toDoModels.getAllTasks();
@@ -12,11 +11,8 @@ const getTaskById = async (id) => {
 };
 
 const createTask = async (task) => {
-  // const validToken = verifyToken.verify(token);
-  // const { _id: userId } = validToken;
-  // const newTask = await toDoModels.createTask(task, userId);
   const newTask = await toDoModels.createTask(task);
-    return newTask;      
+  return newTask;
 };
 
 const updateTask = async (id, task) => {
